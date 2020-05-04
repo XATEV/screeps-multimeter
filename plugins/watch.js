@@ -37,6 +37,9 @@ module.exports = function(multimeter) {
     return multimeter.api.memory
       .get("watch")
       .then(val => {
+        if(val && !val.data) {
+          multimeter.log(JSON.stringify(val));
+        }
         if (typeof val === "object" && val.ok === 1 && typeof val.data.expressions == "object") {
           client_verified = true;
           return val.data.expressions;
